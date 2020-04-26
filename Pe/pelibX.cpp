@@ -125,6 +125,7 @@ DWORD CPELibrary::Offset2RVA(DWORD dwRO)
     }
     return(dwRO+section->VirtualAddress-section->PointerToRawData);
 }
+
 //================================================================
 //----------------------------------------------------------------
 PIMAGE_SECTION_HEADER CPELibrary::ImageRVA2Section(DWORD dwRVA)
@@ -155,6 +156,28 @@ PIMAGE_SECTION_HEADER CPELibrary::ImageOffset2Section(DWORD dwRO)
         }
     }
     return(NULL);
+}
+
+PIMAGE_SECTION_HEADER CPELibrary::ImageOffset2Section(string Name) {
+    for (int i = 0; i < image_nt_headers->FileHeader.NumberOfSections; i++) {
+        if (strncmp(Name.c_str(), (const char*)image_section_header[i]->Name, Name.length()) == 0) {
+            return image_section_header[i];
+        }
+    }
+}
+
+PCHAR CPELibrary::ImageSectionGet(DWORD SecNum) {
+    if (image_nt_headers->FileHeader.NumberOfSections > SecNum) {
+        return image_section[SecNum];
+    }
+    return 0;
+}
+PCHAR CPELibrary::ImageSectionGet(string Name) {
+    for (int i = 0; i < image_nt_headers->FileHeader.NumberOfSections; i++) {
+        if (strncmp(Name.c_str(), (const char*)image_section_header[i]->Name, Name.length()) == 0) {
+            return image_section[i];
+        }
+    }
 }
 //================================================================
 //----------------------------------------------------------------

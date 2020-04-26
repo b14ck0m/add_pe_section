@@ -32,6 +32,11 @@ Ashkbiz Danehkar
 */
 #pragma once
 #define MAX_SECTION_NUM         20
+#include <cstdio>
+#include <string>
+
+using namespace std;
+
 //----------------------------------------------------------------
 class CPELibrary 
 {
@@ -60,9 +65,13 @@ public:
     //-----------------------------------------
     PIMAGE_SECTION_HEADER ImageRVA2Section(DWORD dwRVA);
     PIMAGE_SECTION_HEADER ImageOffset2Section(DWORD dwRO);
+    PIMAGE_SECTION_HEADER ImageOffset2Section(string Name);
     //-----------------------------------------
     DWORD ImageOffset2SectionNum(DWORD dwRVA);
     PIMAGE_SECTION_HEADER AddNewSection(char* szName,DWORD dwSize);
+    PCHAR ImageSectionGet(DWORD SecNum);
+    PCHAR ImageSectionGet(string Name);
+
     //-----------------------------------------
 public:
     //-----------------------------------------
